@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Causal Dashboard</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Geneva, Verdana;
+        }
+        #layout {
+            display: flex;
+            height: 100%;
+        }
+        #sidebar {
+            width: 200px;
+            background: #e2e1df;
+            padding: 20px;
+            box-shadow: 2px 0 5px 0 rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        #sigma-container {
+            flex-grow: 1;
+            height: calc(100% - 40px);
+            margin: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
+            position: relative;
+        }
+        select, .description {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: white;
+            box-sizing: border-box;
+        }
+        .filter-container {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        }
+        h1, h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .description {
+            font-size: 0.85rem;
+            margin-top: 0;
+            padding-left: 0;
+            padding-right: 0;
+            color: #666;
+        }
+        button {
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #004494;
+        }
+    </style>
+</head>
+<body>
+    <div id="layout">
+        <div id="sidebar">
+            <h1>Causal Graph Dashboard</h1>
+            
+
+            <body>
+                <div class="filter-container">
+                    <h2>Select Graph:</h2>
+                    <select id="graph-selector">
+                    </select>
+                </div>
+            </body>
+
+            <body>
+                <div class="filter-container">
+                    <h2>Categories:</h2>
+                    <h3>Gender: </h3>
+                    <select id="gender-selector">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <h3>Age Bracket:</h3>
+                    <select id="age-selector">
+                        <option value="20-29">20-29</option>
+                        <option value="30-39">30-39</option>
+                        <option value="40-49">40-49</option>
+                    </select>
+                    <h3>Education:</h3>
+                    <select id="edu-selector">
+                        <option value="High School">High School</option>
+                        <option value="TAFE">TAFE</option>
+                        <option value="Undergraduate">Undergraduate</option>
+                        <option value="Postgraduate">Postgraduate</option>
+                    </select>
+                    <button>Update Graph</button>
+                </div>
+            </body>
+
+
+
+            <body>
+                <div class="filter-container">
+                    <h2>Weight Filter: </h2>
+                    <label for="weight-slider">Weight: <span id="weight-min">0.5</span> to <span id="weight-max">1.5</span></label>
+                    <input type="range" id="weight-slider" min="0.5" max="1.5" value="0.5" step="0.01">
+
+                </div>
+            </body>
+            
+            <body>
+                <div class="filter-container">
+                    <button onclick="resetView()">Reset View</button>
+                    <script>
+                    function resetView() {
+                        if (window.s && window.s.cameras[0]) {
+                            window.s.cameras[0].goTo({x: 0, y: 0, ratio: 1.0, angle: 0});
+                            window.s.refresh();
+                        }
+                    }
+                    </script>
+                </div>
+            </body>
+            <!-- 
+            <body>
+                <div class="filter-container">
+                    <button id="highlight-path-button">Highlight Paths</button>
+                    <button id="reset-highlight-button">Reset Highlight</button>
+                    
+                     Slider for minimum path length 
+                    <label for="path-length-slider">Minimum Path Length: <span id="path-length">2</span></label>
+                    <input type="range" id="path-length-slider" min="2" max="10" value="2" step="1">
+                    
+
+                </div>
+            </body>
+            -->
+
+            <!-- 
+            <input type="text" id="search-input" placeholder="Search nodes..." list="suggestions" />
+            <datalist id="suggestions">
+                Options for suggestions will be dynamically added here 
+            </datalist> 
+            -->
+            
+            <!-- <p class="description">Choose a graph to display its network structure with fixed node positions.</p> -->
+            <!-- Additional controls and descriptions can be added here -->
+        </div>
+        <div id="sigma-container"></div>
+    </div>
+    <div id="tooltip" style="position: absolute; display: none; background: white; border: 1px solid black; padding: 5px; pointer-events: none;"></div>
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.0/sigma.min.js"></script>
+    <script src="app.js"></script>   
+    
+
+
+
+</body>
+</html>
